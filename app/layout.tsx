@@ -27,7 +27,43 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="bg-white text-black">
+  <header className="bg-white">
+    <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+      <a href="/" className="flex items-center">
+      <img
+  src="/images/brand/logo.png"
+  alt="DomainLabs"
+  className="h-9 w-auto sm:h-12 md:h-16 lg:h-[96px] xl:h-[110px]"
+/>
+
+      </a>
+
+      <nav className="flex items-center gap-6 text-sm font-medium">
+  <a href="/" className="hover:text-gray-600">
+    Home
+  </a>
+
+  <a href="/about" className="hover:text-gray-600">
+    About
+  </a>
+
+  <a href="/contact" className="hover:text-gray-600">
+    Contact
+  </a>
+
+  <a
+    href="/view-assets"
+    className="rounded-lg bg-black px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+  >
+    View Assets
+  </a>
+</nav>
+    </div>
+  </header>
+
+  {children}
+</body>
     </html>
   );
 }
