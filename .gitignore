@@ -41,3 +41,15 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+# Next.js build files
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Private invoice documents
+/private/invoices/
+
+# Local backups
+*.bak
