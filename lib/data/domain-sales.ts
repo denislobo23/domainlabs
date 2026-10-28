@@ -12,8 +12,9 @@ export type DomainSale = {
 };
 
 export const domainSales: DomainSale[] = [
-  // Example listing — change or remove before going live.
   { domain: "zenna.com.au", price: 395 },
+  { domain: "mypayments.com.au", price: 350 },
+  { domain: "dialabin.com.au", price: 450 },
 ];
 
 export const GST_RATE = 0.1;
