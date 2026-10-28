@@ -19,6 +19,9 @@ export const domainSales: DomainSale[] = [
 
 export const GST_RATE = 0.1;
 
+// The live site address, used for redirects, Google and the sitemap.
+export const SITE_URL = (process.env.SITE_URL || "https://domainlabs.com.au").replace(/\/$/, "");
+
 export function normaliseDomain(input: string): string {
   return decodeURIComponent(input).trim().toLowerCase().replace(/^www\./, "");
 }
