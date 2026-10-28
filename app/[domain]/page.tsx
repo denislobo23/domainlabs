@@ -6,6 +6,7 @@ import {
   findDomainSale,
   formatAud,
   priceBreakdown,
+  SITE_URL,
 } from "@/lib/data/domain-sales";
 import { SALES_PHONE } from "@/lib/sales/email";
 import { TRANSFER_STEPS } from "@/lib/sales/terms";
@@ -20,9 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sale = findDomainSale(domain);
   if (!sale) return {};
   return {
-    title: `${sale.domain} is available | Domain Labs`,
-    description: `Secure ${sale.domain}. No payment until the domain is safely in your account.`,
-    robots: { index: false, follow: false },
+    title: sale.sold
+      ? `${sale.domain} (sold) | Domain Labs`
+      : `${sale.domain} domain for sale | Domain Labs`,
+    description: `${sale.domain} is available to buy for ${formatAud(sale.price)} + GST. No payment until the domain is safely in your account.`,
+    alternates: { canonical: `${SITE_URL}/${sale.domain}` },
+    // Listed domains can appear in Google; sold ones drop out.
+    robots: sale.sold ? { index: false, follow: false } : { index: true, follow: true },
   };
 }
 
