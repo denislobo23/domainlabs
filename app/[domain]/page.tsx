@@ -26,8 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : `${sale.domain} domain for sale | Domain Labs`,
     description: `${sale.domain} is available to buy for ${formatAud(sale.price)} + GST. No payment until the domain is safely in your account.`,
     alternates: { canonical: `${SITE_URL}/${sale.domain}` },
-    // Listed domains can appear in Google; sold ones drop out.
-    robots: sale.sold ? { index: false, follow: false } : { index: true, follow: true },
+    // Sale pages are kept out of Google and other search engines: they're only
+    // for people sent the link or redirected from the domain itself.
+    robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
   };
 }
 
