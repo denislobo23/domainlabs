@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { get } from "@vercel/blob";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { findInvoice } from "@/lib/data/invoices";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,16 +14,18 @@ type Props = {
 
 export async function GET(_request: Request, { params }: Props) {
   const { invoiceId } = await params;
+  const invoice = findInvoice(invoiceId);
 
-  if (invoiceId !== "DOM260828-colouranalysis") {
+  if (!invoice?.pdfBlob) {
     return new NextResponse("Invoice not found", { status: 404 });
   }
+  const pdfName = invoice.pdfBlob;
 
   try {
     let pdf: Uint8Array;
 
     if (process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await get("DOM260828.pdf", {
+      const blob = await get(pdfName, {
         access: "private",
       });
 
@@ -38,7 +41,7 @@ export async function GET(_request: Request, { params }: Props) {
         process.cwd(),
         "private",
         "invoices",
-        "DOM260828.pdf"
+        pdfName
       );
       pdf = new Uint8Array(await readFile(filePath));
     }
@@ -46,7 +49,7 @@ export async function GET(_request: Request, { params }: Props) {
     return new NextResponse(new Blob([new Uint8Array(pdf)], { type: "application/pdf" }), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="DOM260828.pdf"',
+        "Content-Disposition": `attachment; filename="${pdfName}"`,
         "Cache-Control": "private, no-store, max-age=0",
         "X-Content-Type-Options": "nosniff",
         "X-Robots-Tag": "noindex, nofollow",
