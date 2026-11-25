@@ -46,8 +46,8 @@ export const invoices: Invoice[] = [
   {
     id: "DOM261119-waterseal-df241323",
     number: "DOM261119",
-    date: "19 November 2026",
-    due: "26 November 2026",
+    date: "26 November 2026",
+    due: "3 December 2026",
     billTo: [
       "Waterseal Waterproofing Pty Ltd",
       "ABN 73 099 002 338",
